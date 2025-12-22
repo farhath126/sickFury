@@ -1,0 +1,51 @@
+[
+  {
+    "match": "Atl\u00e9tico Madrid at Girona",
+    "score": "0-3",
+    "raw_details": [
+      "Goal - Volley - Koke (13')",
+      "Yellow Card - N/A (24')",
+      "Goal - Conor Gallagher (38')",
+      "Yellow Card - Arnau Mart\u00ednez (57')",
+      "Yellow Card - Thomas Lemar (84')",
+      "Goal - Antoine Griezmann (90'+2')"
+    ]
+  },
+  {
+    "match": "Barcelona at Villarreal",
+    "score": "0-2",
+    "raw_details": [
+      "Penalty - Scored - Raphinha (12')",
+      "Red Card - Renato Veiga (39')",
+      "Yellow Card - Eric Garc\u00eda (58')",
+      "Goal - Lamine Yamal (63')",
+      "Yellow Card - Tajon Buchanan (73')"
+    ]
+  },
+  {
+    "match": "Rayo Vallecano at Elche",
+    "score": "4-0",
+    "raw_details": [
+      "Goal - H\u00e9ctor Fort (6')",
+      "Yellow Card - Nobel Mendy (22')",
+      "Yellow Card - Unai L\u00f3pez (57')",
+      "Goal - \u00c1lvaro Rodr\u00edguez (67')",
+      "Goal - Germ\u00e1n Valera (70')",
+      "Yellow Card - Aleix Febas (79')",
+      "Yellow Card - Florian Lejeune (82')",
+      "Yellow Card - Josan (84')",
+      "Goal - Martim Neto (90'+1')"
+    ]
+  },
+  {
+    "match": "Getafe at Real Betis",
+    "score": "4-0",
+    "raw_details": [
+      "Goal - Header - Aitor Ruibal (16')",
+      "Yellow Card - Allan Nyom (22')",
+      "Goal - Aitor Ruibal (49')",
+      "Goal - Pablo Fornals (52')",
+      "Goal - Cucho Hern\u00e1ndez (60')"
+    ]
+  }
+]

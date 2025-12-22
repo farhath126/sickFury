@@ -1,0 +1,13 @@
+# Event Constants
+
+# Input Events
+EVT_BTN_UP = "BTN_UP"
+EVT_BTN_DOWN = "BTN_DOWN"
+EVT_BTN_SELECT = "BTN_SELECT"
+EVT_BTN_BACK = "BTN_BACK"
+EVT_KNOB_CW = "KNOB_CW"    # Clockwise
+EVT_KNOB_CCW = "KNOB_CCW"  # Counter-Clockwise
+
+# System Events
+EVT_QUIT = "SYSTEM_QUIT"
+EVT_DATA_UPDATED = "DATA_UPDATED"

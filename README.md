@@ -1,77 +1,99 @@
-# SickFury Pager 📟
+SickFury Pager
 
-**"Motherf..." — Nick Fury (probably, if he saw this)**
+“Motherf—” — Nick Fury, probably
 
-SickFury is a retro-futuristic, handheld sports pager designed to deliver live scores straight to your pocket with zero fluff. Inspired by the iconic Captain Marvel pager, this device strips away the noise of modern betting apps and gives you just the raw data in a beautiful, low-fidelity 128x64 pixel interface.
+SickFury is a retro-futuristic handheld sports pager that delivers live scores with zero noise. No ads, no betting junk, no endless scrolling — just the game.
 
-Currently running as a PC simulation, SickFury is destined for the **Raspberry Pi Zero W**, where it will live as a dedicated hardware device.
+Inspired by the Captain Marvel pager, it leans into old-school constraints: a tiny 128×64 pixel display showing only what matters. Right now it runs as a PC simulation, but the end goal is a dedicated Raspberry Pi Zero W device that lives as standalone hardware.
 
----
+What it does
+Multi-sport support
 
-## 🚀 Features
+Cricket
 
-### Multi-Sport Support
-SickFury doesn't discriminate. We track the biggest games across:
-*   **🏏 Cricket**:  
-    *   Live scores from top international and league matches.
-    *   Real-time batsmen stats (runs, balls faced) for live games.
-    *   Smart card parsing (Rich vs Compact views).
-*   **⚽ Football**:  
-    *   Coverage of **EPL, LaLiga, Bundesliga, Serie A, Ligue 1, and UCL**.
-    *   **Live Match Clock**: Real-time minute tracking.
-    *   **Goal Details**: See exactly who scored and when (Goals, Penalties, Own Goals).
-    *   Smart sorting: Live games always float to the top.
-*   **🔫 Counter-Strike 2 (CS2)**:  
-    *   **Unified Feed**: Live, Upcoming, and Past matches all in one list.
-    *   **Format Detection**: Automatically flags BO3/BO5 matches.
-    *   **Map Parsing**: Scans match details for map picks (Mirage, Inferno, Nuke, etc.).
-    *   Score breakdown for finished games.
+Live scores from major international and league matches
 
-### The "Pager" Aesthetic
-*   **128x64 Resolution**: Every pixel counts. Optimized for small OLED displays.
-*   **Menu System**: Simple list navigation to switch between sports.
-*   **Physical Controls (Simulated)**: Controlled via keyboard (`UP`, `DOWN`, `ENTER`, `BACK`) to mimic tactile buttons.
-*   **No API Keys**: Powered by custom-built reliable web scrapers (Cricbuzz, ESPN, GosuGamers). No paid subscriptions required.
+Current batsmen stats (runs, balls faced)
 
----
+Automatically switches between compact and detailed views depending on the match
 
-## 🛠️ Architecture
+Football
 
-SickFury is built to be **hackable** and **hardware-agnostic**.
+Covers EPL, LaLiga, Bundesliga, Serie A, Ligue 1, and UCL
 
-*   **HAL (Hardware Abstraction Layer)**: The core logic has no idea what it's running on. 
-    *   *PC Implementation*: Uses `pygame` to render the display and capture key presses.
-    *   *Pi Implementation (Coming Soon)*: Will drop in to drive SPI OLEDs and read GPIO buttons directly.
-*   **Provider System**: Each sport is a self-contained module. Want to add F1? Just write a new Provider class.
-*   **State Machine**: robust event loop handling fetching, parsing, and rendering without blocking the UI.
+Live match clock that updates in real time
 
----
+Goal details (scorer, minute, penalty or own goal)
 
-## 🎮 How to Run (PC Simulation)
+Live matches always stay at the top
 
-1.  **Install Dependencies**:
-    ```bash
-    pip install pygame requests beautifulsoup4
-    ```
+Counter-Strike 2
 
-2.  **Launch the Pager**:
-    ```bash
-    python main.py
-    ```
+Unified list for live, upcoming, and completed matches
 
-3.  **Controls**:
-    *   `UP` / `DOWN`: Scroll lists or text.
-    *   `ENTER`: Select sport / View match details.
-    *   `ESC` / `BACK`: Go back to menu / previous screen.
+BO3 / BO5 detection
 
----
+Map information parsed from match details
 
-## 🔮 Roadmap
+Clear score breakdown for finished games
 
-*   **Hardware Build**: Porting to Raspberry Pi Zero W + 0.96" / 1.3" OLED.
-*   **Battery Optimization**: Deep sleep modes for weeks of standby.
-*   **More Sports**: F1, NBA, and maybe some eSports League of Legends.
+The pager idea
 
----
+This project is intentionally constrained.
 
-*Built with ❤️ and a distinct lack of patience for ads.*
+128×64 resolution forces clarity
+
+Simple list-based menus
+
+Button-driven navigation (simulated via keyboard for now)
+
+No API keys or subscriptions — data is scraped from public sources
+
+The goal is for it to feel like hardware, not a mobile app in disguise.
+
+How it’s built
+
+SickFury is modular and hardware-agnostic by design.
+
+Hardware Abstraction Layer
+Core logic is independent of the platform.
+
+PC version uses pygame
+
+Raspberry Pi version will directly drive OLEDs and GPIO buttons
+
+Provider system
+Each sport is its own module. Adding a new sport is just writing a new provider.
+
+State-driven loop
+Fetching, parsing, and rendering are handled without blocking the UI.
+
+Running it on PC
+
+Install dependencies:
+
+pip install pygame requests beautifulsoup4
+
+
+Run:
+
+python main.py
+
+
+Controls:
+
+UP / DOWN: scroll
+
+ENTER: select or open match
+
+ESC / BACK: return
+
+Roadmap
+
+Port to Raspberry Pi Zero W with a small OLED
+
+Battery optimization for long standby time
+
+Additional sports such as F1 and NBA
+
+Built with care, curiosity, and a strong dislike for ads.

@@ -5,6 +5,7 @@ from core.events import *
 from hal.pc_impl import PCDisplay, PCInput
 from providers.cricket import CricketProvider
 from providers.football import FootballProvider
+from providers.cskp import CSKPProvider
 from ui.renderer import Renderer
 import config
 
@@ -19,7 +20,8 @@ class App:
         # Initialize Providers
         self.providers = {
             "Cricket": CricketProvider(),
-            "Football": FootballProvider()
+            "Football": FootballProvider(),
+            "CS2": CSKPProvider()
         }
         self.current_provider = self.providers["Cricket"] # Default but overridden by menu
         

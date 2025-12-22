@@ -25,7 +25,7 @@ class AppState:
     last_update_time: float = 0
     
     # Menu
-    menu_items: List[str] = field(default_factory=lambda: ["Cricket", "Football"])
+    menu_items: List[str] = field(default_factory=lambda: ["Cricket", "Football", "CS2"])
     selected_menu_index: int = 0
     
     # Scrolling

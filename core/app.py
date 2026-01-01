@@ -68,56 +68,71 @@ class App:
                 elif self.state.view_mode == "DETAIL":
                     self.state.detail_scroll_offset += 10
 
-            elif event == EVT_BTN_UP:
+            # 2-Button Logic (BTN_A = Next/Scroll, BTN_B = Select/Action)
+            if event == EVT_BTN_A:
+                # NEXT / SCROLL
                 if self.state.view_mode == "MENU":
-                    self.state.selected_menu_index = (self.state.selected_menu_index - 1) % len(self.state.menu_items)
-
-                elif self.state.view_mode == "LIST" and self.state.matches:
-                    self.state.selected_match_index = (self.state.selected_match_index - 1) % len(self.state.matches)
+                    self.state.selected_menu_index = (self.state.selected_menu_index + 1) % len(self.state.menu_items)
+                
+                elif self.state.view_mode == "LIST":
+                    # List size = matches + 1 (for Back button)
+                    list_size = len(self.state.matches) + 1
+                    self.state.selected_match_index = (self.state.selected_match_index + 1) % list_size
                     
-                    # Scroll Logic
-                    if self.state.selected_match_index < self.state.list_scroll_offset:
-                        self.state.list_scroll_offset = self.state.selected_match_index
-                    # Wrap around handling
-                    if self.state.selected_match_index == len(self.state.matches) - 1:
-                         # Move offset to show last item
-                         items_visible = 7
-                         self.state.list_scroll_offset = max(0, len(self.state.matches) - items_visible)
+                    # Scroll Logic (Keep cursor visible)
+                    items_visible = 7
+                    # If cursor goes below visible window, move offset
+                    if self.state.selected_match_index >= self.state.list_scroll_offset + items_visible:
+                        self.state.list_scroll_offset += 1
+                    # If cursor wraps to top (0), reset offset
+                    if self.state.selected_match_index == 0:
+                        self.state.list_scroll_offset = 0
 
                 elif self.state.view_mode == "DETAIL":
-                    self.state.detail_scroll_offset = max(0, self.state.detail_scroll_offset - 10)
-
-            elif event == EVT_BTN_SELECT:
+                    # Scroll Down
+                    # Need max height? Hard to know without renderer feedback, but we can guess or just let it grow.
+                    # We can wrap to top if user scrolls too far?
+                    # Let's just scroll down indefinitely for now, or maybe wrap at some point?
+                    # A "Loop to Top" behavior is good for single-button scrolling.
+                    self.state.detail_scroll_offset += 10
+                    # For now no max check, user can scroll endlessly or we need a way to know content height.
+            
+            elif event == EVT_BTN_B:
+                # SELECT / ACTION
                 if self.state.view_mode == "MENU":
                     # Select Sport
                     sport = self.state.menu_items[self.state.selected_menu_index]
                     self.state.current_sport = sport
                     self.current_provider = self.providers[sport]
-                    self.state.matches = [] # Clear old data
+                    self.state.matches = [] 
                     self.state.view_mode = "LIST"
-                    self.state.selected_match_index = 0
+                    self.state.selected_match_index = 1 # Start at first match, 0 is Back
                     self.state.list_scroll_offset = 0
-                    # Trigger fetch immediately in a separate thread or just wait?
-                    # Waiting is fine for 30s cycle, but user hates waiting.
-                    # Ideally we force a fetch. We can do this by setting a flag or calling method if thread safe.
-                    # For now we rely on the loop picking it up or the loop being fast enough.
-                    # Actually, the loop might be sleeping. Let's force a fetch.
                     threading.Thread(target=self._force_fetch).start()
-                    
-                elif self.state.matches: # Only allow selection if matches exist
-                    if self.state.view_mode == "LIST":
-                        self.state.view_mode = "DETAIL"
-                        self.state.detail_scroll_offset = 0 # Reset scroll on entry
+
+                elif self.state.view_mode == "LIST":
+                    if self.state.selected_match_index == 0:
+                        # BACK Selected
+                        self.state.view_mode = "MENU"
+                        self.state.selected_match_index = 0
                     else:
-                        self.state.view_mode = "LIST" # Toggle back
+                        # Match Selected (Index - 1)
+                        if self.state.matches:
+                            self.state.view_mode = "DETAIL"
+                            self.state.detail_scroll_offset = 0
+
+                elif self.state.view_mode == "DETAIL":
+                    # Back to List
+                    self.state.view_mode = "LIST"
             
+            # Legacy/Dev Controls
+            # Legacy/Dev Controls
             elif event == EVT_BTN_BACK:
                  if self.state.view_mode == "DETAIL":
-                    self.state.view_mode = "LIST"
-                    self.state.list_scroll_offset = 0
+                     self.state.view_mode = "LIST"
                  elif self.state.view_mode == "LIST":
-                    self.state.view_mode = "MENU"
-                    self.state.matches = []
+                     self.state.view_mode = "MENU"
+                     self.state.matches = []
 
     def _force_fetch(self):
         try:

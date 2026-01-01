@@ -17,14 +17,29 @@ class Renderer:
         y += 4
         
         # Draw visible window
+        # Valid indices: 0 (Back) to len(matches)
+        total_items = len(state.matches) + 1
         start_idx = state.list_scroll_offset
-        max_visible = 7
-        end_idx = min(len(state.matches), start_idx + max_visible)
+        max_visible = 5 # Reduced because Back takes space? No, screen size is same.
+        # But we must ensure loop doesn't go out of bounds of logical items
+        end_idx = min(total_items, start_idx + max_visible)
         
         for i in range(start_idx, end_idx):
-            match = state.matches[i]
             prefix = "> " if i == state.selected_match_index else "  "
-            line_text = f"{prefix}{match.title} | {match.score_main}"
+            
+            if i == 0:
+                line_text = f"{prefix}[ < BACK ]"
+            else:
+                match_idx = i - 1
+                if match_idx < len(state.matches):
+                    match = state.matches[match_idx]
+                    status_short = "Do" if match.status == "Live" else "" # Just a tiny indicator?
+                    # maybe just the title
+                    line_text = f"{prefix}{match.title}"
+                    if match.status == "LIVE": line_text += " *"
+                else:
+                    line_text = ""
+
             draw.text((0, y), line_text, fill=255, font=self.font)
             y += 12
 
@@ -33,7 +48,7 @@ class Renderer:
             draw.text((10, 50), "No Matches", fill=255, font=self.font)
             return
 
-        match = state.matches[state.selected_match_index]
+        match = state.matches[state.selected_match_index - 1]
         offset = state.detail_scroll_offset
         
         # Header - always fixed or scrolling? 

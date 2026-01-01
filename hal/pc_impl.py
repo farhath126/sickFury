@@ -54,12 +54,22 @@ class PCInput(InputDriver):
             
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    events.append(EVT_BTN_UP)
+                    events.append(EVT_BTN_A) # Scroll / Next
                 elif event.key == pygame.K_DOWN:
-                    events.append(EVT_BTN_DOWN)
+                    events.append(EVT_BTN_A) # Also Next for convenience in PC sim? No, let's strict 2 button sim.
+                    # Actually, if we want "Next", UP/DOWN both doing Next is confusing if we map them physically.
+                    # Let's map UP -> A, DOWN -> A (Next)
+                    # ENTER -> B (Select)
+                    # ESCHEW BACK from keyboard if we want to force 2-button flow?
+                    pass 
                 elif event.key == pygame.K_RETURN:
-                    events.append(EVT_BTN_SELECT)
+                    events.append(EVT_BTN_B)
+                elif event.key == pygame.K_z: # Alt for B
+                    events.append(EVT_BTN_B)
+                elif event.key == pygame.K_x: # Alt for A
+                    events.append(EVT_BTN_A)
                 elif event.key == pygame.K_ESCAPE:
+                    # Keep legacy back for emergencies/dev validation
                     events.append(EVT_BTN_BACK)
                 elif event.key == pygame.K_RIGHT:
                      events.append(EVT_KNOB_CW)
